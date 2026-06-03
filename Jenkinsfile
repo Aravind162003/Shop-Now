@@ -40,7 +40,7 @@ pipeline {
 
         stage('Build & Push Backend') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
                     sh '''
                         # Build and push the Node.js backend from its directory
                         docker build -t ${BACKEND_IMAGE}:${IMAGE_TAG} ./server
