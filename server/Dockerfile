@@ -1,5 +1,5 @@
 # Stage 1: Dependency Resolution
-FROM node:26-alpine AS deps
+FROM node:20-alpine AS deps
 WORKDIR /app
 
 # Copy package files
@@ -10,7 +10,7 @@ COPY package*.json ./
 RUN npm ci --omit=dev
 
 # Stage 2: Production Runtime
-FROM node:26-alpine
+FROM node:20-alpine
 WORKDIR /app
 
 # Copy the clean, production-only node_modules from the first stage
