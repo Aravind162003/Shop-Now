@@ -31,7 +31,7 @@ pipeline {
                         echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
                         
                         # Build and push the Vite frontend from its directory
-                        docker build -t ${FRONTEND_IMAGE}:${IMAGE_TAG} ./frontend
+                        docker build -t ${FRONTEND_IMAGE}:${IMAGE_TAG} ./client
                         docker push ${FRONTEND_IMAGE}:${IMAGE_TAG}
                     '''
                 }
@@ -43,7 +43,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
                     sh '''
                         # Build and push the Node.js backend from its directory
-                        docker build -t ${BACKEND_IMAGE}:${IMAGE_TAG} ./backend
+                        docker build -t ${BACKEND_IMAGE}:${IMAGE_TAG} ./server
                         docker push ${BACKEND_IMAGE}:${IMAGE_TAG}
                     '''
                 }
