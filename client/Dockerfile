@@ -22,4 +22,8 @@ COPY --from=builder /app/dist ./dist
 EXPOSE 3000
 
 # -s flag ensures React Router handles page refreshes smoothly
+<<<<<<< HEAD
 CMD ["serve", "-s", "dist"]
+=======
+CMD ["serve", "-s", "dist"]
+>>>>>>> 569859f (added jenkinsfile)

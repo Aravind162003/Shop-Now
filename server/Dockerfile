@@ -23,4 +23,8 @@ COPY . .
 EXPOSE 5000
 
 # Start the Node backend
+<<<<<<< HEAD
 CMD ["node", "server.js"]
+=======
+CMD ["node", "index.js"]
+>>>>>>> 569859f (added jenkinsfile)
