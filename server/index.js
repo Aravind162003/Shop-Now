@@ -12,8 +12,11 @@ connectDb()
 
 app.use(express.json())
 app.use(cors({
-    origin:[process.env.ORIGIN,'https://shopping-cart-mern-yo9j.vercel.app'],
-    credentials:true
+    origin: function (origin, callback) {
+        // This dynamically allows any frontend IP to connect
+        callback(null, true);
+    },
+    credentials: true
 }))
 app.use(cookieParser())
 
