@@ -36,7 +36,7 @@ pipeline {
                                 -Dsonar.projectKey=shop-now-frontend \
                                 -Dsonar.projectName="Shop-Now-Frontend" \
                                 -Dsonar.sources=. \
-                                -Dsonar.host.url=$SONAR_URL \
+                                -Dsonar.host.url=http://localhost:9001 \
                                 -Dsonar.login=$SONAR_AUTH_TOKEN \
                                 -Dsonar.exclusions=node_modules/**,build/**,dist/**
                                 '''
@@ -51,7 +51,7 @@ pipeline {
                                 -Dsonar.projectKey=shop-now-backend \
                                 -Dsonar.projectName="Shop-Now-Backend" \
                                 -Dsonar.sources=. \
-                                -Dsonar.host.url=$SONAR_URL \
+                                -Dsonar.host.url=http://localhost:9001 \
                                 -Dsonar.login=$SONAR_AUTH_TOKEN \
                                 -Dsonar.exclusions=node_modules/**
                                 '''
