@@ -11,6 +11,7 @@ const port = 3000
 connectDb()
 
 app.use(express.json())
+
 app.use(cors({
     origin: function (origin, callback) {
         // This dynamically allows any frontend IP to connect
