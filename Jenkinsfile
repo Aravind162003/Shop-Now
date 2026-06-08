@@ -24,6 +24,23 @@ pipeline {
             }
         }
 
+        stage('Static Code Analysis') {
+          steps {
+            dir('backend') {
+              withCredentials([string(credentialsId: 'sonar123', variable: 'SONAR_AUTH_TOKEN')]) {
+                sh '''
+                npx sonar-scanner \
+                -Dsonar.projectKey=react-exam \
+                -Dsonar.sources=. \
+                -Dsonar.host.url=$SONAR_URL \
+                -Dsonar.login=$SONAR_AUTH_TOKEN \
+                -Dsonar.exclusions=node_modules/**,build/**
+                '''
+              }
+            }
+          }
+        }
+
         stage('Build & Push Frontend') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
