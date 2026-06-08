@@ -30,9 +30,9 @@ pipeline {
               withCredentials([string(credentialsId: 'sonar123', variable: 'SONAR_AUTH_TOKEN')]) {
                 sh '''
                 npx sonar-scanner \
-                -Dsonar.projectKey=react-exam \
+                -Dsonar.projectKey=shop-now \
                 -Dsonar.sources=. \
-                -Dsonar.host.url=$SONAR_URL \
+                -Dsonar.host.url=http:localhost:9001 \
                 -Dsonar.login=$SONAR_AUTH_TOKEN \
                 -Dsonar.exclusions=node_modules/**,build/**
                 '''
