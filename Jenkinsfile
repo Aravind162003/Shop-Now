@@ -24,22 +24,44 @@ pipeline {
             }
         }
 
+        // --- UPDATED PARALLEL STATIC CODE ANALYSIS STAGE ---
         stage('Static Code Analysis') {
-          steps {
-            dir('backend') {
-              withCredentials([string(credentialsId: 'sonar123', variable: 'SONAR_AUTH_TOKEN')]) {
-                sh '''
-                npx sonar-scanner \
-                -Dsonar.projectKey=shop-now \
-                -Dsonar.sources=. \
-                -Dsonar.host.url=http:localhost:9001 \
-                -Dsonar.login=$SONAR_AUTH_TOKEN \
-                -Dsonar.exclusions=node_modules/**,build/**
-                '''
-              }
+            steps {
+                parallel(
+                    "Frontend Scan": {
+                        dir('client') { // Navigates to your React frontend directory
+                            withCredentials([string(credentialsId: 'sonar123', variable: 'SONAR_AUTH_TOKEN')]) {
+                                sh '''
+                                npx sonar-scanner \
+                                -Dsonar.projectKey=shop-now-frontend \
+                                -Dsonar.projectName="Shop-Now-Frontend" \
+                                -Dsonar.sources=. \
+                                -Dsonar.host.url=$SONAR_URL \
+                                -Dsonar.login=$SONAR_AUTH_TOKEN \
+                                -Dsonar.exclusions=node_modules/**,build/**,dist/**
+                                '''
+                            }
+                        }
+                    },
+                    "Backend Scan": {
+                        dir('server') { // Navigates to your Node.js backend directory
+                            withCredentials([string(credentialsId: 'sonar123', variable: 'SONAR_AUTH_TOKEN')]) {
+                                sh '''
+                                npx sonar-scanner \
+                                -Dsonar.projectKey=shop-now-backend \
+                                -Dsonar.projectName="Shop-Now-Backend" \
+                                -Dsonar.sources=. \
+                                -Dsonar.host.url=$SONAR_URL \
+                                -Dsonar.login=$SONAR_AUTH_TOKEN \
+                                -Dsonar.exclusions=node_modules/**
+                                '''
+                            }
+                        }
+                    }
+                )
             }
-          }
         }
+        // ----------------------------------------------------
 
         stage('Build & Push Frontend') {
             steps {
